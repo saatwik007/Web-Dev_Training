@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Factorial Tree Visualizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <!-- D3.js CDN -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Factorial Recursive Tree Visualizer</h1>
+        <div class="input-group">
+            <input type="number" id="numberInput" min="1" max="10" placeholder="Enter n (1-10)">
+            <button onclick="visualize()">Visualize</button>
+        </div>
+        <div id="errorMsg" class="error"></div>
+        <div id="result" class="result"></div>
+        <div id="steps" class="steps"></div>
+         <div class="charts-row">
+        <div class="chart-box">
+            <h2>Bar Chart</h2>
+            <canvas id="barChart" width="350" height="250"></canvas>
+        </div>
+        <div class="chart-box">
+            <h2>Line Chart</h2>
+            <canvas id="lineChart" width="350" height="250"></canvas>
+        </div>
+        <div class="chart-box">
+            <h2>Tree Chart</h2>
+            <div id="treeArea"></div>
+        </div>
+    </div>
+        <div class="facts">
+            <b>What is n!?</b> <br>
+            The factorial of n (written as n!) is the product of all positive integers up to n.<br>
+            Example: 5! = 5 × 4 × 3 × 2 × 1 = 120
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
