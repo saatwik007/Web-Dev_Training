@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Name Generator</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Business Name Generator</h1>
+        <input type="text" id="hfPrompt" placeholder="Describe your business (e.g. tech, food, fashion)" >
+        <div class="buttons_div">
+            <button onclick="generateBusinessNameHF()">Generate Name with AI</button>
+            <button onclick="clearSavedNames()">Clear Saved Names</button>
+        </div>
+        <div id="result"></div>
+        <h3>Saved Names</h3>
+        <div id="savedNames"></div>
+    </div>
+    <script src="script.js"></script>
+    <script type="module">
+    import { InferenceClient } from 'https://cdn.jsdelivr.net/npm/@huggingface/inference@4.7.1/+esm';
+    import { createRepo, commit, deleteRepo, listFiles } from "https://cdn.jsdelivr.net/npm/@huggingface/hub@2.4.1/+esm";
+</script>
+</body>
+</html>
