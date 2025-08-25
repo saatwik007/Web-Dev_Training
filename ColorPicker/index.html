@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Color Detector</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container glass">
+    <h1>🎨 Image Color Detector</h1>
+    <div class="upload-section">
+      <input type="file" id="imageInput" accept="image/*" />
+      <label for="imageInput" class="custom-upload">Upload Image</label>
+    </div>
+    <div class="canvas-wrapper">
+      <canvas id="imageCanvas" width="300" height="200"></canvas>
+    </div>
+    <div id="colorInfo" class="info-panel">
+      <div id="colorSwatch" class="swatch"></div>
+      <span id="colorValue">Click on the image to detect color</span>
+      <span id="colorName"></span>
+      <button id="copyBtn" class="btn">Copy HEX</button>
+      <button id="saveBtn" class="btn">Save to Palette</button>
+    </div>
+    <div id="dominantColorSection" class="info-panel">
+      <strong>Dominant Color:</strong>
+      <div id="dominantColorSwatch" class="swatch"></div>
+      <span id="dominantColorValue"></span>
+    </div>
+    <div id="palette" class="palette-panel">
+      <strong>Palette:</strong>
+      <div id="paletteList"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>         

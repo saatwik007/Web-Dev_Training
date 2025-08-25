@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Clone</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">MyTube</div>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search">
+      <button onclick="searchVideos()">Search</button>
+    </div>
+    <div class="user-icon">👤</div>
+  </header>
+  <div class="container">
+    <aside>
+      <nav>
+        <ul>
+          <li>Home</li>
+          <li>Trending</li>
+          <li>Subscriptions</li>
+        </ul>
+      </nav>
+    </aside>
+    <main>
+      <div id="videoGrid" class="video-grid">
+        <!-- Videos will be populated here by JS -->
+      </div>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
