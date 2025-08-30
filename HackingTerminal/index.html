@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hacker Terminal Prank</title>
+  <style>
+    body {
+      background: #151515;
+      color: #00ff00;
+      font-family: 'Courier New', Courier, monospace;
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #terminal {
+      padding: 20px;
+      height: 100vh;
+      width: 100vw;
+      white-space: pre-wrap;
+      font-size: 1.1em;
+      line-height: 1.4em;
+    }
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      background: #00ff00;
+      animation: blink 1s steps(1) infinite;
+      margin-left: 2px;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1;}
+      51%, 100% { opacity: 0;}
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+  <script src="script.js">
+  </script>
+</body>
+</html>
