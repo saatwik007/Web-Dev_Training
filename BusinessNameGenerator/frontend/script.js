@@ -47,7 +47,7 @@ query({
     } else {
         aiName = "Could not generate a name. Try again!";
     }
-    console.log("Generated Name:", aiName);
+    console.log("Generated Name:", aiName );
     document.getElementById("result").innerText = aiName;
 
     // Save name if not already saved
