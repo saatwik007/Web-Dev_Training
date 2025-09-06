@@ -226,6 +226,7 @@ body {
 .songList ul li {
     list-style-type: decimal;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     gap: 12px;
     cursor: pointer;
@@ -238,7 +239,8 @@ body {
 
 .songList .info {
     font-size: 13px;
-    width: 344px;
+    display: flex;
+    gap: 1rem;
 }
 
 .info div {
@@ -247,14 +249,14 @@ body {
 
 .playnow {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
 }
 
 .playnow span {
     font-size: 15px;
     width: 64px;
-    padding: 12px;
+    padding-right: 12px;
 }
 
 .seekbar {
@@ -345,6 +347,7 @@ body {
         right: 31px;
         top: 25px;
         width: 29px;
+        cursor: pointer;
     }
 
     .timevol {
