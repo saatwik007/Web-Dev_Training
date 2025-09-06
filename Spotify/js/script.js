@@ -1,8 +1,4 @@
 console.log("Hello, Spotify!");
-// const audioPlayer = document.getElementById('audioPlayer');
-// audioPlayer.src = 'songs/song1.mp3'; // Change to your song path
-// audioPlayer.play();
-
 let currentSong = new Audio();
 
 function secondsToMinutesSeconds(seconds) {
@@ -22,8 +18,7 @@ async function getSongs() {
     div.innerHTML = response;
     let as = div.getElementsByTagName('a');
     let song = []
-    for (let i = 0; i < as.length; i++) {
-        const element = as[i];
+    for (const element of as) {
         if (element.href.endsWith(".mp3")) {
             song.push(element.href);
         }
@@ -117,7 +112,6 @@ async function main() {
         document.querySelector('.left').style.left = '-100%';
     });
     document.querySelector("#next").addEventListener('click', () => {
-        // playSong(songs[index + 1]);
         console.log("Playing ", currentSong.src);
         let index = songs.indexOf(currentSong.src);
         if (index === songs.length - 1) {
@@ -127,8 +121,7 @@ async function main() {
         playSong(songs[(index + 1)]);
     })
 
-        document.querySelector("#previous").addEventListener('click', () => {
-        // playSong(songs[index + 1]);
+    document.querySelector("#previous").addEventListener('click', () => {
         console.log("Playing ", currentSong.src);
         let index = songs.indexOf(currentSong.src);
         if (index === 0) {
@@ -144,17 +137,3 @@ async function main() {
 
 }
 main();
-// let addSong = document.getElementById("songs");
-// addSong.innerHTML = `
-//     <li><p>First Song</p></li>
-//     <li><p>Second Song</p></li>
-//     <li><p>Third Song</p></li>
-// `;
-// songs.forEach(song => {
-//   const songItem = document.getElementById('songs');
-//   songItem.innerHTML += `
-//     <li>
-//       <p>${song}</p>
-//     </li>
-//   `;
-// });
