@@ -1,6 +1,6 @@
 console.log("Hello, Spotify!");
 let currentSong = new Audio();
-
+let currFolder;
 function secondsToMinutesSeconds(seconds) {
     if (isNaN(seconds) || !isFinite(seconds)) {
         return '0:00';
@@ -11,8 +11,9 @@ function secondsToMinutesSeconds(seconds) {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 }
 
-async function getSongs() {
-    let a = await fetch('http://127.0.0.1:5500/Spotify/songs/');
+async function getSongs(folder) {
+    currFolder = folder;   
+    let a = await fetch(`http://127.0.0.1:5500/Spotify/${currFolder}/`);
     let response = await a.text();
     let div = document.createElement('div');
     div.innerHTML = response;
@@ -98,7 +99,7 @@ async function displaySongs(songs) {
 
 
 async function main() {
-    let songs = await getSongs();
+    let songs = await getSongs('songs/Diljit');
     playSong(songs[0], true);
     console.log(songs);
     displaySongs(songs);
