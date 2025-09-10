@@ -13,28 +13,29 @@ function secondsToMinutesSeconds(seconds) {
 
 async function getSongs(folder) {
     currFolder = folder;   
+    console.log(`Fetching songs from folder: ${currFolder}`);
     let a = await fetch(`http://127.0.0.1:5500/Spotify/${currFolder}/`);
     let response = await a.text();
     let div = document.createElement('div');
     div.innerHTML = response;
     let as = div.getElementsByTagName('a');
-    let song = []
+    song = []
     for (const element of as) {
         if (element.href.endsWith(".mp3")) {
             song.push(element.href);
         }
     }
-    console.log(song);
+    console.log('songList', song);
     return song;
 }
 
 function playSong(songPath, pause = false) {
     currentSong.src = songPath;
-    if (!pause) {
+    if (pause) {
+        currentSong.pause();
+    } else {
         currentSong.play();
-        play.src = "img/pause.svg";
     }
-    currentSong.play();
     document.querySelector(".songinfo").innerHTML = songPath.split('/').pop();
     document.querySelector(".songtime").innerHTML = '0:00 / 0:00';
 }
@@ -43,6 +44,16 @@ async function displaySongs(songs) {
     const songName = songs.map((song) => {
         return song.split('/').pop();
     });
+
+    Array.from(document.getElementsByClassName('card')).forEach(e => {
+        console.log(e);
+        e.addEventListener('click', async () => {
+        songs = await getSongs(`songs/${e.dataset.folder}`);
+        console.log(`songs/${e.dataset.folder}`);
+        displaySongs(songs);
+    });
+    })
+    
     console.log(songName);
     let songList = document.getElementById("songs");
     songList.innerHTML = "";
@@ -63,22 +74,11 @@ async function displaySongs(songs) {
         element.addEventListener('click', () => {
             console.log("Playing ", songs[index]);
             playSong(songs[index]);
+            play.src = "img/pause.svg";
         });
     });
 
-    let play = document.getElementById("play");
-    let index = 0;
-    play.addEventListener('click', () => {
-        if (currentSong.paused) {
-            console.log("Playing ", songs[index]);
-            playSong(songs[index]);
-            play.src = "img/pause.svg";
-        }
-        else {
-            currentSong.pause();
-            play.src = "img/play.svg";
-        }
-    });
+// ...existing code...
 
     currentSong.addEventListener('timeupdate', () => {
         console.log(currentSong.currentTime, currentSong.duration);
@@ -96,15 +96,39 @@ async function displaySongs(songs) {
 
 
 }
-
+async function displayAlbum(){
+    let b = await fetch(`http://127.0.0.1:5500/Spotify/songs/`);
+    let response = await b.text();
+    let div = document.createElement('div');
+    div.innerHTML = response;
+    let anchors = div.getElementsByTagName('a');
+    console.log(anchors);
+    Array.from(anchors).forEach(e => {
+        if(e.href.includes('/songs/')){
+            console.log(e.href.split('/').pop());
+        }
+        // console.log('folders', e.href.includes('/songs'));
+    });
+}
 
 async function main() {
-    let songs = await getSongs('songs/Diljit');
+    let songs = await getSongs('songs/karan aujla');
     playSong(songs[0], true);
     console.log(songs);
     displaySongs(songs);
+    displayAlbum();
 
-
+    // Set up play button event listener ONCE so it always controls currentSong
+    let play = document.getElementById("play");
+    play.addEventListener('click', () => {
+        if (currentSong.paused) {
+            currentSong.play();
+            play.src = "img/pause.svg";
+        } else {
+            currentSong.pause();
+            play.src = "img/play.svg";
+        }
+    });
     document.querySelector('.hamburger').addEventListener('click', () => {
         document.querySelector('.left').style.left = '0';
     });
@@ -135,6 +159,9 @@ async function main() {
     document.querySelector('.range').getElementsByTagName('input')[0].addEventListener('input', (e) => {
         currentSong.volume = parseInt(e.target.value) / 100;
     });
+
+    
+    
 
 }
 main();
