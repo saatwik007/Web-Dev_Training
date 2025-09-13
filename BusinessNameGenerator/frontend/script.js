@@ -26,12 +26,17 @@ async function generateBusinessNameHF() {
 }
 
 query({ 
-    messages: [
-        {
-            role: "user",
-            content: prompt + ". Suggest a short, catchy business name. along with valid domain names",
-        },
-    ],
+messages: [
+    {
+        role: "system",
+        content: "You are a helpful assistant that generates creative business names and valid domain names." + 
+        " Suggest a short, catchy business name along with valid domain names."
+    },
+    {
+        role: "user",
+        content: prompt
+    }
+],
     model: "openai/gpt-oss-20b",
 }).then((response) => {
     console.log(JSON.stringify(response));
