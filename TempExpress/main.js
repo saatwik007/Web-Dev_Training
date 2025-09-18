@@ -22,7 +22,7 @@ app.get('/blog/intro-to-blog-python', (req,res)=>{
     res.send( 'Hello from the Blog page! Intro to Blog Python' ); 
 })
 app.get('/blog/:slug', (req,res)=>{
-    res.send( `Hello from the Blog page! Intro to Blog ${req.params.slug} !!!!!!!!!!!this page is rendered using slug which is just a variable which picks the name from URL` ); 
+    res.send( `Hello from the Blog page! Intro to Blog ${req.params.slug} this page is rendered using slug which is just a variable which picks the name from URL` ); 
 })
 
 app.listen(port, () => {
