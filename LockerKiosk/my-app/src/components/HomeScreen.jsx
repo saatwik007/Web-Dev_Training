@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function HomeScreen({ onNavigate }) {
+  const navigate = useNavigate();
   return (
  <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#141726] via-[#1a1831] to-[#19132c]">
       <h1 className="text-4xl md:text-5xl font-bold mb-10 text-white drop-shadow-lg tracking-tight select-none">
@@ -16,7 +18,7 @@ export default function HomeScreen({ onNavigate }) {
           onClick={() => onNavigate("open")}
         >
           <span className="text-2xl md:text-3xl font-semibold text-white mb-2">Open Your Locker</span>
-          <span className="text-base text-white/70">Access an existing locker</span>
+          <span className="text-base text-white/70">Access an existing locker !!!</span>
         </button>
         {/* Rent Locker Tile */}
         <button
@@ -24,7 +26,7 @@ export default function HomeScreen({ onNavigate }) {
                      backdrop-blur-sm transition hover:bg-white/20 hover:scale-[1.03] 
                      flex flex-col items-center
                      focus:outline-none"
-          onClick={() => onNavigate("rent")}
+          onClick={() => navigate("/rent")}
         >
           <span className="text-2xl md:text-3xl font-semibold text-white mb-2">Rent a New Locker</span>
           <span className="text-base text-white/70">Get a new locker instantly</span>

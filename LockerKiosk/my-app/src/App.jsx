@@ -1,52 +1,58 @@
 import React, { useState } from "react";
-
-
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 
 import HomeScreen from "./components/HomeScreen";
 import RentLockerScreen from "./components/RentLockerScreen";
 import BookLockerScreen from "./components/BookLockerScreen";
 // import LockerTimerScreen from "./components/LockerTimerScreen";
 
-
-
-
 import './App.css'
-import './index.css'; // or './App.css'
+import './index.css';
+
 function App() {
- const [screen, setScreen] = useState("home");
   const [selectedLocker, setSelectedLocker] = useState(null);
   const [userData, setUserData] = useState(null);
 
   return (
-    <>
-      {screen === "home" && <HomeScreen onNavigate={setScreen} />}
-      {screen === "rent" && (
-        <RentLockerScreen
-          onBack={() => setScreen("home")}
-          onLockerSelect={id => {
-            setSelectedLocker(id);
-            setScreen("book");
-          }}
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomeScreen />} />
+        <Route
+          path="/rent"
+          element={
+            <RentLockerScreen
+              onLockerSelect={id => {
+                setSelectedLocker(id);
+                // Use navigation in the component to go to /book
+              }}
+            />
+          }
         />
-      )}
-      {screen === "book" && (
-        <BookLockerScreen
-          lockerId={selectedLocker}
-          onBack={() => setScreen("rent")}
-          onOtpValidated={data => {
-            setUserData(data);
-            setScreen("timer");
-          }}
+        <Route
+          path="/book"
+          element={
+            <BookLockerScreen
+              lockerId={selectedLocker}
+              onOtpValidated={data => {
+                setUserData(data);
+                // Use navigation in the component to go to /timer
+              }}
+            />
+          }
         />
-      )}
-      {screen === "timer" && (
-        <LockerTimerScreen
-          lockerId={selectedLocker}
-          userData={userData}
-          onBack={() => setScreen("home")}
-        />
-      )}
-    </>
+        {/* 
+        <Route
+          path="/timer"
+          element={
+            <LockerTimerScreen
+              lockerId={selectedLocker}
+              userData={userData}
+            />
+          }
+        /> 
+        */}
+      </Routes>
+    </Router>
   );
 }
 

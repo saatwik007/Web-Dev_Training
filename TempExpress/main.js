@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+app.use(express.static('public'));
+
 app.get('/', (req, res) => {
   res.send('Hello World!!!')
 })
@@ -23,6 +25,12 @@ app.get('/blog/intro-to-blog-python', (req,res)=>{
 })
 app.get('/blog/:slug', (req,res)=>{
     res.send( `Hello from the Blog page! Intro to Blog ${req.params.slug} this page is rendered using slug which is just a variable which picks the name from URL` ); 
+})
+
+
+app.post('/', (req, res) => {
+  console.log("Its a post request")
+  res.send('Hello World!!!')
 })
 
 app.listen(port, () => {
