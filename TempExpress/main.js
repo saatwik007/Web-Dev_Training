@@ -33,6 +33,21 @@ app.post('/', (req, res) => {
   res.send('Hello World!!!')
 })
 
+app.put('/', (req, res) => {
+  console.log("Its a put request")
+  res.send('Hello World!!')
+})
+
+
+app.get('/index', (req, res) => {
+  console.log("INDEX")
+  res.sendFile('templates/index.html', {root: __dirname})
+})
+
+app.get('/api', (req, res) => {
+res.json({ message: 'Hello from the API endpoint!', status: 'success', data: [ 2, 3, 4, 5] , info: { version: '1.0.0', author: 'Your Name' } });
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
