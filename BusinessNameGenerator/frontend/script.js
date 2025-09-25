@@ -1,7 +1,3 @@
-
-
-
-
 // Remove the API key line completely
 let savedNames = JSON.parse(localStorage.getItem('savedNames')) || [];
 
