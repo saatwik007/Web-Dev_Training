@@ -1,8 +1,21 @@
 const express = require('express')
+const blogs = require('./routes/blog')
+const shop = require('./routes/shop')
 const app = express()
 const port = 3000
 
+
 app.use(express.static('public'));
+app.use('/blog', blogs);
+app.use('/shop', shop);
+
+
+app.use((req,res,next) => {
+  console.log(`${req.method} request for ${req.url}`);
+  console.log(req.headers);
+  req.saatwik = "I Am Saatwik from Middleware"
+  next();
+})
 
 app.get('/', (req, res) => {
   res.send('Hello World!!!')
