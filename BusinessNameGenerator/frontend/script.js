@@ -1,67 +1,56 @@
-const HF_API_KEY= "";
 
+
+
+
+// Remove the API key line completely
 let savedNames = JSON.parse(localStorage.getItem('savedNames')) || [];
 
-
 async function generateBusinessNameHF() {
-
-        const prompt = document.getElementById("hfPrompt").value || "Generate a creative business name";
+    const prompt = document.getElementById("hfPrompt").value || "Generate a creative business name";
     document.getElementById("result").innerText = "Generating...";
 
+    try {
+        // Call your backend instead of Hugging Face directly
+        const response = await fetch('http://localhost:3001/api/generate-name', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ prompt })
+        });
 
-    async function query(data) {
-	const response = await fetch(
-		"https://router.huggingface.co/v1/chat/completions",
-		{
-			headers: {
-				Authorization: `Bearer ${HF_API_KEY}`,
-				"Content-Type": "application/json",
-			},
-			method: "POST",
-			body: JSON.stringify(data),
-		}
-	);
-	const result = await response.json();
-	return result;
+        const result = await response.json();
+        
+        let aiName = "";
+        if (
+            result &&
+            result.choices &&
+            result.choices[0] &&
+            result.choices[0].message &&
+            result.choices[0].message.content
+        ) {
+            aiName = result.choices[0].message.content.trim();
+        } else {
+            aiName = "Could not generate a name. Try again!";
+        }
+        
+        console.log("Generated Name:", aiName);
+        document.getElementById("result").innerText = aiName;
+
+        // Save name if not already saved
+        if (!savedNames.includes(aiName) && aiName.length > 1) {
+            savedNames.push(aiName);
+            renderSavedNames();
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById("result").innerText = "Error generating name. Try again!";
+    }
 }
 
-query({ 
-messages: [
-    {
-        role: "system",
-        content: "You are a helpful assistant that generates creative business names and valid domain names." + 
-        " Suggest a short, catchy business name along with valid domain names."
-    },
-    {
-        role: "user",
-        content: prompt
-    }
-],
-    model: "openai/gpt-oss-20b",
-}).then((response) => {
-    console.log(JSON.stringify(response));
-     let aiName = "";
-    if (
-        response &&
-        response.choices &&
-        response.choices[0] &&
-        response.choices[0].message &&
-        response.choices[0].message.content
-    ) {
-        aiName = response.choices[0].message.content.trim();
-    } else {
-        aiName = "Could not generate a name. Try again!";
-    }
-    console.log("Generated Name:", aiName );
-    document.getElementById("result").innerText = aiName;
+// ...existing code for renderSavedNames, showCopied, clearSavedNames...
 
-    // Save name if not already saved
-    if (!savedNames.includes(aiName) && aiName.length > 1) {
-        savedNames.push(aiName);
-        renderSavedNames();
-    }
-}); 
-}
+
 
 function renderSavedNames() {
     const savedNamesDiv = document.getElementById("savedNames");
