@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="generateEmployeeData()">Click to generate employee data</button>
+    <button onclick="deleteAllEmployeeData()">Click to delete all employee data</button>
+    <!-- <p><%= siteName %></p>
+    <p><%= searchText %></p> -->
+    <script>
+        async function generateEmployeeData(){
+            let response = await fetch("/", {method:"POST"});
+            let data = await response.text();
+            console.log(data);
+        }
+        async function deleteAllEmployeeData(){
+            let response = await fetch("/delete", {method:"DELETE"});
+            let data = await response.text();
+            console.log(data);
+        }
+    </script>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Authentication</title>
+    <style>
+        *{
+            background: #f3f4f6 ;
+        }
+        .auth-container { 
+            max-width: 450px; 
+            margin: 60px auto; 
+            padding: 30px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .form-section { margin-bottom: 20px; }
+        .input-field { 
+            width: 100%; 
+            padding: 12px; 
+            margin: 8px 0; 
+            border: 2px solid #e1e5e9;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        .auth-btn { 
+            width: 100%; 
+            padding: 14px; 
+            background: #4f46e5; 
+            color: white; 
+            border: none; 
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .auth-btn:hover { background: #3b38d1; }
+        .form-toggle { 
+            text-align: center; 
+            margin-top: 20px; 
+            color: #4f46e5; 
+            cursor: pointer; 
+            text-decoration: underline;
+        }
+        .hide-form { display: none; }
+        .alert { 
+            padding: 12px; 
+            margin: 15px 0; 
+            border-radius: 6px; 
+            text-align: center;
+        }
+        .alert-success { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .alert-danger { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div id="alertBox"></div>
+        
+        <!-- Sign In Section -->
+            <!--
+        <div id="signinSection">
+            <h2>Sign In</h2>
+            <form onsubmit="processSignin(event)">
+                <div class="form-section">
+                    <input type="email" class="input-field" id="signinEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-section">
+                    <input type="password" class="input-field" id="signinPassword" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="auth-btn">Sign In</button>
+            </form>
+            <div class="form-toggle" onclick="switchToSignup()">New user? Create account here</div>
+        </div>
+
+        <!-- Sign Up Section -->
+            <!--
+        <div id="signupSection" class="hide-form">
+            <h2>Create Account</h2>
+            <form onsubmit="processSignup(event)">
+                <div class="form-section">
+                    <input type="text" class="input-field" id="signupFullName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-section">
+                    <input type="email" class="input-field" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-section">
+                    <input type="password" class="input-field" id="signupPassword" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="auth-btn">Create Account</button>
+            </form>
+            <div class="form-toggle" onclick="switchToSignin()">Already registered? Sign in here</div>
+        </div>
+    </div>
+
+    <script>
+        function switchToSignup() {
+            document.getElementById('signinSection').classList.add('hide-form');
+            document.getElementById('signupSection').classList.remove('hide-form');
+            clearAlerts();
+        }
+
+        function switchToSignin() {
+            document.getElementById('signupSection').classList.add('hide-form');
+            document.getElementById('signinSection').classList.remove('hide-form');
+            clearAlerts();
+        }
+
+        function displayAlert(text, alertType = 'success') {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.innerHTML = `<div class="alert alert-${alertType}">${text}</div>`;
+            setTimeout(() => alertBox.innerHTML = '', 4000);
+        }
+
+        function clearAlerts() {
+            document.getElementById('alertBox').innerHTML = '';
+        }
+
+        async function processSignin(event) {
+            event.preventDefault();
+            const userEmail = document.getElementById('signinEmail').value;
+            const userPassword = document.getElementById('signinPassword').value;
+
+            try {
+                const apiResponse = await fetch('/auth/signin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: userEmail, password: userPassword })
+                });
+                
+                const responseData = await apiResponse.json();
+                
+                if (apiResponse.ok) {
+                    displayAlert('Welcome! Login successful.', 'success');
+                    // Handle successful login - redirect or update UI
+                } else {
+                    displayAlert(responseData.error || 'Sign in failed', 'danger');
+                }
+            } catch (err) {
+                displayAlert('Connection error. Please try again.', 'danger');
+            }
+        }
+
+        async function processSignup(event) {
+            event.preventDefault();
+            const userName = document.getElementById('signupFullName').value;
+            const userEmail = document.getElementById('signupEmail').value;
+            const userPassword = document.getElementById('signupPassword').value;
+
+            try {
+                const apiResponse = await fetch('/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ fullName: userName, email: userEmail, password: userPassword })
+                });
+                
+                const responseData = await apiResponse.json();
+                
+                if (apiResponse.ok) {
+                    displayAlert('Account created! Please sign in now.', 'success');
+                    switchToSignin();
+                } else {
+                    displayAlert(responseData.error || 'Account creation failed', 'danger');
+                }
+            } catch (err) {
+                displayAlert('Connection error. Please try again.', 'danger');
+            }
+        }
+    </script>
+</body>
+</html> -->
