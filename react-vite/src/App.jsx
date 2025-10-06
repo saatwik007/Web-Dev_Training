@@ -18,7 +18,7 @@ function App() {
 
     HELLO WORLD - {a}
     </p>
-    <button onClick={() => changeState(a + 1)}>Click Me</button>
+    <button onClick={() => changeState(a + 1)}>Click  to test useEFFECT</button>
     </>
   )
 }
