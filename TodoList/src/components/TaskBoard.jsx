@@ -5,6 +5,8 @@ const TaskBoard = () => {
   return (
     <div className='w-full bg-gray-900 h-auto p-4'>
         <TaskCard />
+        <TaskCard />
+        <TaskCard />
 
     </div>
   )
