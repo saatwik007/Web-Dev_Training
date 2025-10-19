@@ -2,11 +2,11 @@ import React from 'react'
 import SideNav from './SideNav'
 import TaskBoard from './TaskBoard'
 
-const Dashboard = () => {
+const Dashboard = ({tasks}) => {
   return (
     <div className='flex'>
     <SideNav />
-    <TaskBoard />
+    <TaskBoard tasks={tasks} />
     </div>
   )
 }
