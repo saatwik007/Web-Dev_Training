@@ -2,7 +2,7 @@ import React from 'react'
 
 const SideNav = () => {
   return (
-<aside className="w-64 bg-gray-900 p-4 flex flex-col space-y-6 border-r border-gray-800">
+<aside className="hidden lg:flex w-64 bg-gray-900 p-4 flex-col space-y-6 border-r border-gray-800 h-screen">
     
     <div>
         <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">

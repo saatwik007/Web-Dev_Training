@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
-const TaskModal = ({onClose,onSubmit}) => {
+const TaskModal = ({ onClose, onSubmit }) => {
     const [taskData, setTaskData] = useState({
         title: '',
-        description: 'Description . . .',
+        description: '',
         priority: 'low',
         dueDate: ''
     });
@@ -16,10 +16,20 @@ const TaskModal = ({onClose,onSubmit}) => {
         console.log(taskData);
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Submitting Task:", taskData);
         onSubmit(taskData);
+        let r = await fetch("http://localhost:3000/", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'  // Add this header!
+            },
+            body: JSON.stringify(taskData)
+        })
+        let res = await r.text()
+          console.log("Response from server:", res);
+        console.log("Task data sent:", taskData);
         onClose();
         setTaskData({
             title: '',
@@ -28,24 +38,24 @@ const TaskModal = ({onClose,onSubmit}) => {
             dueDate: ''
         });
     }
-  return (
-      <div className="fixed inset-0 bg-opacity-50 bg-white/30 flex items-center justify-center z-50">
-            <div className="bg-gray-800 rounded-lg p-6 w-full max-w-md mx-4">
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl font-bold text-white">Create New Task</h2>
-                    <button 
+    return (
+        <div className="fixed inset-0 bg-white/30 bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-gray-800 rounded-lg p-4 sm:p-6 w-full max-w-md mx-auto max-h-[90vh] overflow-y-auto">
+                <div className="flex justify-between items-center mb-4 sm:mb-6">
+                    <h2 className="text-lg sm:text-xl font-bold text-white">Create New Task</h2>
+                    <button
                         onClick={onClose}
-                        className="text-gray-400 hover:text-white hover:cursor-pointer"
+                        className="text-gray-400 hover:text-white p-1 rounded-full hover:bg-gray-700 transition duration-150"
                     >
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
 
-                <form 
-                onSubmit={handleSubmit}
-                 className="space-y-4">
+                <form
+                    onSubmit={handleSubmit}
+                    className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-200 mb-1">
                             Task Title
@@ -104,17 +114,17 @@ const TaskModal = ({onClose,onSubmit}) => {
                         />
                     </div>
 
-                    <div className="flex space-x-3 pt-4">
+                    <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 pt-6">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="hover:cursor-pointer flex-1 px-4 py-2 text-gray-300 bg-gray-600 rounded-md hover:bg-gray-500 transition duration-150"
+                            className="w-full sm:flex-1 px-4 py-2.5 text-sm sm:text-base text-gray-300 bg-gray-600 rounded-md hover:bg-gray-500 transition duration-150"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
-                            className="hover:cursor-pointer flex-1 px-4 py-2 text-white bg-emerald-700 rounded-md hover:bg-emerald-600 transition duration-150"
+                            className="w-full sm:flex-1 px-4 py-2.5 text-sm sm:text-base text-white bg-emerald-700 rounded-md hover:bg-emerald-600 transition duration-150"
                         >
                             Create Task
                         </button>
@@ -122,7 +132,7 @@ const TaskModal = ({onClose,onSubmit}) => {
                 </form>
             </div>
         </div>
-  )
+    )
 }
 
 export default TaskModal
